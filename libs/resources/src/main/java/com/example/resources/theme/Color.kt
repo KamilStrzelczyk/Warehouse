@@ -1,4 +1,4 @@
-package com.example.warehouse.ui.theme
+package com.example.resources.theme
 
 import androidx.compose.ui.graphics.Color
 

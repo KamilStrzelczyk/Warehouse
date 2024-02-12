@@ -1,4 +1,4 @@
-package com.example.warehouse.ui.theme
+package com.example.resources.theme
 
 import android.app.Activity
 import android.os.Build
@@ -42,7 +42,7 @@ fun WarehouseTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {

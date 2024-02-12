@@ -88,8 +88,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.material3)
     implementation(libs.dagger.hilt)
-    implementation(libs.dagger.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.junit)
+    kapt(libs.dagger.hilt.compiler)
+
+    implementation(project(":libs:resources"))
 }

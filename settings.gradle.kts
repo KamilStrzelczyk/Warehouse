@@ -16,3 +16,5 @@ dependencyResolutionManagement {
 rootProject.name = "Warehouse"
 include(":app")
 include(":feature")
+include(":libs")
+include(":libs:resources")
