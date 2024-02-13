@@ -1,4 +1,4 @@
-package com.example.component
+package com.example.presentation.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

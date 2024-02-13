@@ -3,10 +3,10 @@ import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotilnAndroid)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.devToolsKsp)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.kotilnAndroid)
 }
 
 android {
@@ -29,7 +29,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -49,10 +52,6 @@ android {
         resources {
             excludes += "/META-INF/*"
         }
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 
     tasks.register<Detekt>("detektAll") {
@@ -81,18 +80,31 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Compose
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.dagger.hilt)
-    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    testImplementation(libs.junit)
-    kapt(libs.dagger.hilt.compiler)
 
+    // Junit
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+
+    // Hilt
+    ksp(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Module
     implementation(project(":libs:resources"))
     implementation(project(":feature:home"))
 }

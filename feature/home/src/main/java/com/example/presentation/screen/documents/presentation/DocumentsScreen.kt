@@ -1,4 +1,4 @@
-package com.example.documents.presentation
+package com.example.presentation.screen.documents.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -16,22 +16,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.component.WHCard
-import com.example.component.WHScreenContainer
+import com.example.presentation.component.WHCard
+import com.example.presentation.component.WHScreenContainer
 import com.example.resources.R as ResR
 
 @Composable
 fun DocumentsScreen() {
     val viewModel: DocumentsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
-    DocumentsScreen(state.documents)
+    DocumentsScreen(
+        documents = state.documents,
+        onDocumentClicked = { },
+    )
 }
 
 @Composable
-private fun DocumentsScreen(documents: List<Document>) {
+private fun DocumentsScreen(documents: List<Document>, onDocumentClicked: () -> Unit) {
     WHScreenContainer(
         title = stringResource(ResR.string.documents_top_bar_title),
-        onClicked = {},
+        onClicked = onDocumentClicked,
     ) {
         LazyColumn {
             items(documents) { document ->
@@ -78,7 +81,8 @@ private fun DocumentsScreen_Preview() {
                 signature = "AAAA",
                 contractor = "Contractor",
             )
-        )
+        ),
+        onDocumentClicked = {}
     )
 }
 

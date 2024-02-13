@@ -1,4 +1,4 @@
-package com.example.contractors.presentation
+package com.example.presentation.screen.contractors.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.component.WHCard
-import com.example.component.WHScreenContainer
+import com.example.domain.model.Contractor
+import com.example.presentation.component.WHCard
+import com.example.presentation.component.WHScreenContainer
 import com.example.resources.R as ResR
 
 @Composable
@@ -37,7 +38,7 @@ fun ContractorsScreen() {
 
 @Composable
 private fun ContractorsScreen(
-    contractors: List<String>,
+    contractors: List<Contractor>,
     onAddClicked: () -> Unit,
 ) {
     WHScreenContainer(
@@ -57,7 +58,7 @@ private fun ContractorsScreen(
 
 @Composable
 fun Item(
-    contractor: String,
+    contractor: Contractor,
     onMoreClicked: () -> Unit,
 ) {
     WHCard(onClicked = {}) {
@@ -68,7 +69,7 @@ fun Item(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(contractor)
+            Text(contractor.name)
             Icon(
                 Icons.Default.MoreVert,
                 contentDescription = null,
@@ -82,7 +83,13 @@ fun Item(
 @Preview
 private fun ContractorsScreen_Preview() {
     ContractorsScreen(
-        contractors = mutableListOf("Contractor"),
+        contractors = mutableListOf(
+            Contractor(
+                id = 1L,
+                sign = "",
+                name = "LoremIpsum",
+            )
+        ),
         onAddClicked = {},
     )
 }
@@ -91,7 +98,11 @@ private fun ContractorsScreen_Preview() {
 @Preview
 private fun Item_Preview() {
     Item(
-        contractor = "Contractor",
+        contractor = Contractor(
+            id = 1L,
+            sign = "",
+            name = "LoremIpsum",
+        ),
         onMoreClicked = {},
     )
 }

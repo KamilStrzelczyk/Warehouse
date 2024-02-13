@@ -1,14 +1,14 @@
-package com.example.navigation
+package com.example.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.contractors.presentation.ContractorsScreen
-import com.example.documents.presentation.DocumentsScreen
-import com.example.home.presentation.HomeScreen
-import com.example.navigation.Destination.Contractors
-import com.example.navigation.Destination.Documents
+import com.example.presentation.navigation.Destination.Contractors
+import com.example.presentation.navigation.Destination.Documents
+import com.example.presentation.screen.contractors.presentation.ContractorsScreen
+import com.example.presentation.screen.documents.presentation.DocumentsScreen
+import com.example.presentation.screen.home.presentation.HomeScreen
 
 @Composable
 fun navGraphMain() {

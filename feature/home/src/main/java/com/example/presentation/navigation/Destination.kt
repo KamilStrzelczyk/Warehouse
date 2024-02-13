@@ -1,4 +1,4 @@
-package com.example.navigation
+package com.example.presentation.navigation
 
 sealed class Destination(val route: String) {
     data object Home : Destination(HOME_ROUTE)

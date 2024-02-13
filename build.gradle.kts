@@ -4,5 +4,6 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.kotilnAndroid) apply false
     alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.devToolsKsp) apply false
     alias(libs.plugins.hilt) apply false
 }

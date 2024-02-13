@@ -3,7 +3,7 @@ package com.example.warehouse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.navigation.navGraphMain
+import com.example.presentation.navigation.navGraphMain
 import com.example.resources.theme.WarehouseTheme
 import dagger.hilt.android.AndroidEntryPoint
 

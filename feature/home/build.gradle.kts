@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotilnAndroid)
+    alias(libs.plugins.devToolsKsp)
 }
 
 android {
@@ -50,6 +51,11 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.ui.tooling)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     implementation(project(":libs:resources"))
 }
