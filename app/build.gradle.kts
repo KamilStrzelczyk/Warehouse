@@ -94,4 +94,5 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
 
     implementation(project(":libs:resources"))
+    implementation(project(":feature:home"))
 }
