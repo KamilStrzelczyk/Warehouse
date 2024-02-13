@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="4.3">
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/app/src/main/java/com/example/warehouse/MainActivity.kt">
+	<error line="6" column="1" severity="warning" message="Unused import" source="detekt.NoUnusedImports" />
+</file>
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/feature/home/src/main/java/com/example/component/WHCard.kt">
+	<error line="13" column="14" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+</file>
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/feature/home/src/main/java/com/example/component/WHScreenContainer.kt">
+	<error line="20" column="14" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+</file>
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/feature/home/src/main/java/com/example/contractors/presentation/ContractorsScreen.kt">
+	<error line="28" column="5" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="39" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="59" column="5" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="83" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="92" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="83" column="13" severity="warning" message="Private function `ContractorsScreen_Preview` is unused." source="detekt.UnusedPrivateMember" />
+	<error line="92" column="13" severity="warning" message="Private function `Item_Preview` is unused." source="detekt.UnusedPrivateMember" />
+</file>
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/feature/home/src/main/java/com/example/documents/presentation/DocumentsScreen.kt">
+	<error line="24" column="5" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="31" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="45" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="73" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="87" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="73" column="13" severity="warning" message="Private function `DocumentsScreen_Preview` is unused." source="detekt.UnusedPrivateMember" />
+	<error line="87" column="13" severity="warning" message="Private function `Item_Preview` is unused." source="detekt.UnusedPrivateMember" />
+</file>
+<file name="D:/Prgramowanie/Projekty android studio/Warehouse/feature/home/src/main/java/com/example/home/presentation/HomeScreen.kt">
+	<error line="21" column="5" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="47" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="67" column="13" severity="warning" message="Function names should match the pattern: [a-z][a-zA-Z0-9]*" source="detekt.FunctionNaming" />
+	<error line="67" column="13" severity="warning" message="Private function `HomeScreen_Preview` is unused." source="detekt.UnusedPrivateMember" />
+</file>
+</checkstyle>

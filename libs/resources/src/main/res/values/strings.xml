@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Warehouse</string>
+    <string name="contractors_top_bar_title">Kontrahenci</string>
+    <string name="documents_top_bar_title">Dokumenty</string>
+    <string name="home_document_card">Dokumenty</string>
+    <string name="home_contractors_card">Kontrahenci</string>
+</resources>
