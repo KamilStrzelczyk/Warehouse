@@ -1,4 +1,4 @@
-package com.example.home.presentation
+package com.example.presentation.screen.home.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.component.WHCard
+import com.example.presentation.component.WhCard
 import com.example.resources.R as ResR
 
 private const val WEIGHT_FOR_CARD = 1f
@@ -32,12 +32,12 @@ fun HomeScreen(
         val modifierForCardWithWeight = Modifier.weight(WEIGHT_FOR_CARD)
         ClickableCard(
             modifier = modifierForCardWithWeight,
-            text = stringResource(ResR.string.home_document_card),
+            text = stringResource(ResR.string.home_contractors_card),
             onClicked = onFirstButtonClicked,
         )
         ClickableCard(
             modifier = modifierForCardWithWeight,
-            text = stringResource(ResR.string.home_contractors_card),
+            text = stringResource(ResR.string.home_document_card),
             onClicked = onSecondButtonClicked,
         )
     }
@@ -49,9 +49,9 @@ private fun ClickableCard(
     text: String,
     onClicked: () -> Unit,
 ) {
-    WHCard(
+    WhCard(
         modifier = modifier.fillMaxSize(),
-        onClicked = onClicked,
+        onClick = onClicked,
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

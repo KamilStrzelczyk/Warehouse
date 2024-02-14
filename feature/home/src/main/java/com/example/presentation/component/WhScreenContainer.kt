@@ -1,4 +1,4 @@
-package com.example.component
+package com.example.presentation.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun WHScreenContainer(
+internal fun WhScreenContainer(
     title: String,
     onClicked: () -> Unit,
     content: @Composable () -> Unit,
