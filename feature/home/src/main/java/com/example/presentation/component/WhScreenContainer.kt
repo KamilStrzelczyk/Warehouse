@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun WHScreenContainer(
+internal fun WhScreenContainer(
     title: String,
     onClicked: () -> Unit,
     content: @Composable () -> Unit,

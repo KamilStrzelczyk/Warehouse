@@ -24,52 +24,62 @@ abstract class AppDatabase : RoomDatabase() {
         getContractorDao().saveNewContractor(
             ContractorEntity(
                 id = 1L,
-                sign = "",
+                signature = "",
                 name = "LoremIpsum",
             ),
             ContractorEntity(
-                id = 1L,
-                sign = "",
+                id = 2L,
+                signature = "",
                 name = "LoremIpsum",
             ),
             ContractorEntity(
-                id = 1L,
-                sign = "",
+                id = 3L,
+                signature = "",
                 name = "LoremIpsum",
             ),
             ContractorEntity(
-                id = 1L,
-                sign = "",
+                id = 4L,
+                signature = "",
+                name = "LoremIpsum",
+            ),
+            ContractorEntity(
+                id = 5L,
+                signature = "",
+                name = "LoremIpsum",
+            ),
+            ContractorEntity(
+                id = 6L,
+                signature = "",
                 name = "LoremIpsum",
             ),
         )
         getDocumentDao().saveNewDocument(
             DocumentEntity(
-                id = 1L,
+                id = 2L,
                 date = "20/12/2034",
-                sign = "sign",
-                contractor = "LoremIpsum",
+                signature = "signature",
+                contractorId = 1L,
                 collection = "",
             ),
             DocumentEntity(
                 id = 2L,
                 date = "20/12/2034",
-                sign = "sign",
-                contractor = "LoremIpsum",
+                signature = "signature",
+                contractorId = 1L,
                 collection = "",
             ),
             DocumentEntity(
                 id = 3L,
                 date = "20/12/2034",
-                sign = "sign",
-                contractor = "LoremIpsum",
+                signature = "signature",
+                contractorId = 1L,
                 collection = "",
             ),
             DocumentEntity(
                 id = 4L,
                 date = "20/12/2034",
-                sign = "sign",
-                contractor = "LoremIpsum",
+                signature = "signature",
+                contractorId = 1L,
                 collection = "",
             )
         )

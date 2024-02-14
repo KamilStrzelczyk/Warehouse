@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "contractor")
 data class ContractorEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
-    @ColumnInfo(name = "sign")
-    val sign: String,
+    @ColumnInfo(name = "signature")
+    val signature: String,
     @ColumnInfo(name = "name")
     val name: String,
 )

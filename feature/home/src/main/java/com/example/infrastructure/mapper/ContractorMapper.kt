@@ -11,17 +11,17 @@ class ContractorMapper @Inject constructor() {
             contractor.run {
                 Contractor(
                     id = id,
-                    sign = sign,
                     name = name,
+                    signature = signature,
                 )
             }
         }
 
-    fun toEntityModel(user: Contractor) = user.run {
+    fun toEntityModel(contractor: Contractor) = contractor.run {
         ContractorEntity(
             id = id,
-            sign = sign,
             name = name,
+            signature = signature,
         )
     }
 }

@@ -42,7 +42,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.ui.tooling.preview.android)
-    implementation(libs.androidx.compose.hilt.navigation)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -51,6 +50,11 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.ui.tooling)
+
+    // Hilt
+    ksp(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+    implementation(libs.androidx.compose.hilt.navigation)
 
     // Room
     implementation(libs.androidx.room.runtime)

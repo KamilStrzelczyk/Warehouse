@@ -6,14 +6,14 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "document")
 data class DocumentEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     @ColumnInfo(name = "date")
     val date: String,
-    @ColumnInfo(name = "sign")
-    val sign: String,
+    @ColumnInfo(name = "signature")
+    val signature: String,
     @ColumnInfo(name = "contractor")
-    val contractor: String,
+    val contractorId: Long,
     @ColumnInfo(name = "collection")
     val collection: String,
 )
