@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Hilt
     ksp(libs.dagger.hilt.compiler)
@@ -61,5 +62,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+    // JodaTime
+    implementation(libs.joda.time)
+    
     implementation(project(":libs:resources"))
 }

@@ -1,5 +1,6 @@
 package com.example.infrastructure.repository
 
+import com.example.domain.model.Contractor
 import com.example.domain.model.Document
 import com.example.domain.repository.DocumentRepository
 import com.example.infrastructure.database.dao.ContractorDao
@@ -14,14 +15,17 @@ class DocumentRepositoryImpl @Inject constructor(
     private val documentMapper: DocumentMapper,
     private val contractorMapper: ContractorMapper,
 ) : DocumentRepository {
+    override suspend fun get(documentId: Long): Document =
+        documentMapper.documentToDomainModel(
+            contractors = getContractors(),
+            document = documentDao.get(documentId)
+        )
 
     override suspend fun getAll(): List<Document> =
-        contractorDao.getAllContractor().let { contractors ->
-            documentMapper.toDomainModel(
-                contractors = contractorMapper.toDomainModel(contractors),
-                documents = documentDao.getAllDocument()
-            )
-        }
+        documentMapper.documentsToDomainModel(
+            contractors = getContractors(),
+            documents = documentDao.getAllDocument()
+        )
 
     override suspend fun save(document: Document) {
         documentDao.saveNewDocument(documentMapper.toEntityModel(document))
@@ -30,4 +34,6 @@ class DocumentRepositoryImpl @Inject constructor(
     override suspend fun delete(document: Document) {
         documentDao.deleteDocument(documentMapper.toEntityModel(document))
     }
+
+    private suspend fun getContractors(): List<Contractor> = contractorMapper.toDomainModel(contractorDao.getAllContractor())
 }

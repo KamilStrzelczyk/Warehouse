@@ -7,11 +7,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.Destination.Contractors
 import com.example.presentation.navigation.Destination.Documents
 import com.example.presentation.screen.contractors.presentation.ContractorsScreen
+import com.example.presentation.screen.documentdetails.DocumentDetailsScreen
 import com.example.presentation.screen.documents.presentation.DocumentsScreen
 import com.example.presentation.screen.home.presentation.HomeScreen
 
 @Composable
-fun navGraphMain() {
+fun NavGraphMain() {
     val navController = rememberNavController()
 
     NavHost(
@@ -32,9 +33,14 @@ fun navGraphMain() {
                 }
             )
         }
-        composable(Contractors.route) {
-            ContractorsScreen()
+        composable(Contractors.route) { ContractorsScreen() }
+        composable(Documents.route) {
+            DocumentsScreen(
+                navigate = {
+                    navController.navigate(Destination.DocumentDetails(it).route)
+                }
+            )
         }
-        composable(Documents.route) { DocumentsScreen() }
+        composable(Destination.DocumentDetails.ROUTE) { DocumentDetailsScreen() }
     }
 }

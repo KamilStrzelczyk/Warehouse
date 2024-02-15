@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Contractor
 import com.example.domain.model.Document
+import com.example.domain.provider.LocalDateTimeProvider
 import com.example.domain.usecase.AddDocumentUseCase
 import com.example.domain.usecase.GetAllContractorUseCase
 import com.example.domain.usecase.GetAllDocumentUseCase
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class DocumentsViewModel @Inject constructor(
     private val getAllContractor: GetAllContractorUseCase,
     private val getAllDocument: GetAllDocumentUseCase,
+    private val localDateTime: LocalDateTimeProvider,
     private val addDocument: AddDocumentUseCase,
 ) : ViewModel() {
 
@@ -61,7 +63,7 @@ class DocumentsViewModel @Inject constructor(
 
     fun onAddDocumentClicked() {
         val document = Document(
-            date = "12/12/2034",
+            date = localDateTime.getNow().toString(),
             signature = "NewDocument",
             contractor = _state.value.selectedContractor,
             collection = "",

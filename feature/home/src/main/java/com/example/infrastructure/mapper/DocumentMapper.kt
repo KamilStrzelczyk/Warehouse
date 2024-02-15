@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class DocumentMapper @Inject constructor() {
 
-    fun toDomainModel(
+    fun documentsToDomainModel(
         contractors: List<Contractor>,
         documents: List<DocumentEntity>,
     ): List<Document> =
@@ -24,6 +24,23 @@ class DocumentMapper @Inject constructor() {
                     collection = collection,
                 )
             }
+        }
+
+    fun documentToDomainModel(
+        contractors: List<Contractor>,
+        document: DocumentEntity,
+    ): Document =
+        document.run {
+            Document(
+                id = id,
+                date = date,
+                signature = signature,
+                contractor = setContractor(
+                    contractorId = contractorId,
+                    contractors = contractors,
+                ),
+                collection = collection,
+            )
         }
 
     private fun setContractor(
