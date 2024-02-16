@@ -7,6 +7,10 @@ android {
     namespace = "com.example.resources"
     compileSdk = 34
 
+    defaultConfig {
+        minSdk = 26
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,7 +36,9 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
+
+    // Splash
+    implementation(libs.androidx.core.splashscreen)
 }

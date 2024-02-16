@@ -104,6 +104,9 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+    // Splash
+    implementation(libs.androidx.core.splashscreen)
+
     // Module
     implementation(project(":libs:resources"))
     implementation(project(":feature:home"))

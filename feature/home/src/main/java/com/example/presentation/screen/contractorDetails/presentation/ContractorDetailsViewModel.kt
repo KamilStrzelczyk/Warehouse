@@ -33,7 +33,8 @@ internal class ContractorDetailsViewModel @Inject constructor(
     private val _event = MutableSharedFlow<Event>()
     val event: SharedFlow<Event> = _event
 
-    private val contractorId: String = checkNotNull(savedStateHandle[CONTRACTOR_DETAILS_ID_ARGUMENT])
+    private val contractorId: String =
+        checkNotNull(savedStateHandle[CONTRACTOR_DETAILS_ID_ARGUMENT])
 
     init {
         updateContractors()
@@ -54,7 +55,7 @@ internal class ContractorDetailsViewModel @Inject constructor(
             val newContractor = Contractor(
                 id = _state.value.contractor.id,
                 name = _state.value.textFieldValue,
-                signature = ""
+                signature = _state.value.contractor.signature
             )
             updateContractor(newContractor)
             updateStateAfterEditContractor()
