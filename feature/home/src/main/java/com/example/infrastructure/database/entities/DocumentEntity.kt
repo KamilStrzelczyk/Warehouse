@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "document")
 data class DocumentEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val documentId: Long,
     @ColumnInfo(name = "date")
     val date: String,
     @ColumnInfo(name = "signature")

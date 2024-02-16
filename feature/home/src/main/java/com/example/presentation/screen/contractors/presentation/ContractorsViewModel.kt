@@ -44,7 +44,7 @@ class ContractorsViewModel @Inject constructor(
 
     fun onAddContractorClicked() {
         val name = _state.value.textFieldValue
-        if (name.isNotEmpty()) {
+        if (name.isNotEmpty() && name.isNotBlank()) {
             val contractor = Contractor(
                 signature = "",
                 name = name,
@@ -56,7 +56,6 @@ class ContractorsViewModel @Inject constructor(
             }
             updateContractors()
             addContractorDialogVisible(false)
-        } else {
         }
     }
 
