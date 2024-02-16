@@ -2,6 +2,7 @@ package com.example.infrastructure.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.domain.utils.UnitOfMeasure
 import com.example.infrastructure.database.dao.ContractorDao
 import com.example.infrastructure.database.dao.DocumentCrossGoodsDao
 import com.example.infrastructure.database.dao.DocumentDao
@@ -33,32 +34,14 @@ abstract class AppDatabase : RoomDatabase() {
             ContractorEntity(
                 id = 1L,
                 signature = "",
-                name = "LoremIpsum",
-            ),
+                name = "SuperMarket",
+            )
+        )
+        getContractorDao().saveNewContractor(
             ContractorEntity(
                 id = 2L,
                 signature = "",
-                name = "LoremIpsum",
-            ),
-            ContractorEntity(
-                id = 3L,
-                signature = "",
-                name = "LoremIpsum",
-            ),
-            ContractorEntity(
-                id = 4L,
-                signature = "",
-                name = "LoremIpsum",
-            ),
-            ContractorEntity(
-                id = 5L,
-                signature = "",
-                name = "LoremIpsum",
-            ),
-            ContractorEntity(
-                id = 6L,
-                signature = "",
-                name = "LoremIpsum",
+                name = "Hipermarket",
             ),
         )
         getDocumentDao().saveNewDocument(
@@ -67,28 +50,21 @@ abstract class AppDatabase : RoomDatabase() {
                 date = "20/12/2034",
                 signature = "signature",
                 contractorId = 1L,
-                collection = "",
+                contractorName = "Hipermarket",
             ),
-            DocumentEntity(
+        )
+        getGoodsDao().saveNewGoods(
+            GoodsEntity(
+                goodsId = 1L,
+                name = "Mandarynka",
+                amount = 10,
+                unitOfMeasure = UnitOfMeasure.Kg.name,
+            )
+        )
+        getDocumentCrossGoodsDao().insert(
+            DocumentCrossGoodsEntity(
                 documentId = 2L,
-                date = "20/12/2034",
-                signature = "signature",
-                contractorId = 1L,
-                collection = "",
-            ),
-            DocumentEntity(
-                documentId = 3L,
-                date = "20/12/2034",
-                signature = "signature",
-                contractorId = 1L,
-                collection = "",
-            ),
-            DocumentEntity(
-                documentId = 4L,
-                date = "20/12/2034",
-                signature = "signature",
-                contractorId = 1L,
-                collection = "",
+                goodsId = 1L,
             )
         )
     }

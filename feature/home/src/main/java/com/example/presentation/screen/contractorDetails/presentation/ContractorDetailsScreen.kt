@@ -1,4 +1,4 @@
-package com.example.presentation.screen.goodsDetails
+package com.example.presentation.screen.contractorDetails.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,57 +14,57 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.domain.model.Goods
-import com.example.presentation.component.EditGoodsDialog
+import com.example.domain.model.Contractor
 import com.example.presentation.component.WhCard
 import com.example.presentation.component.WhScreenContainer
+import com.example.presentation.component.fakeContractor
+import com.example.presentation.screen.contractorDetails.presentation.ContractorDetailsViewModel.Event.NavigateBack
+import com.example.presentation.screen.contractors.component.ContractorDialog
+import com.example.resources.R as ResR
 
 @Composable
-internal fun GoodsDetailsScreen(
+fun ContractorDetailsScreen(
     navigateBack: () -> Unit,
 ) {
-    val viewModel: GoodsDetailsViewModel = hiltViewModel()
+    val viewModel: ContractorDetailsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                GoodsDetailsViewModel.Event.NavigateBack -> navigateBack()
+                NavigateBack -> navigateBack()
             }
         }
     }
 
-    GoodsDetailsScreen(
-        goods = state.goods,
-        onDeleteClicked = viewModel::onDeleteGoodsClicked,
-        onEditClicked = viewModel::editGoodsDialogVisible,
+    ContractorsScreen(
+        contractor = state.contractor,
+        onDeleteClicked = viewModel::onDeleteContractorClicked,
+        onEditClicked = viewModel::editContractorDialogVisible,
     )
-    EditGoodsDialog(
-        visible = state.editGoodsDialogVisible,
-        textFieldValueForName = state.textFieldValueForName,
-        textFieldValueForAmount = state.textFieldValueForAmount,
-        selectedUnitOfMeasure = state.selectedUnitOfMeasure,
-        onConfirmDialog = viewModel::onEditGoodsClicked,
-        onSelectedUnitOfMeasure = viewModel::onSelectedUnitOfMeasure,
-        onDismissDialog = viewModel::editGoodsDialogVisible,
-        onTextValueChange = viewModel::onTextValueChange,
+    ContractorDialog(
+        confirmButtonText = stringResource(ResR.string.contractors_add_contractor_dialog_cta_button_add),
+        visible = state.dialogVisible,
+        textFieldValue = state.textFieldValue,
+        onTextValueChange = { text -> viewModel.onTextValueChange(text) },
+        onDismissDialog = viewModel::editContractorDialogVisible,
+        onConfirmDialog = viewModel::editContractor,
     )
 }
 
 @Composable
-private fun GoodsDetailsScreen(
-    goods: Goods,
+private fun ContractorsScreen(
+    contractor: Contractor,
     onDeleteClicked: () -> Unit,
     onEditClicked: (Boolean) -> Unit,
 ) {
-    WhScreenContainer(
-        title = { Text("Szczegóły pozycji") },
-    ) {
+    WhScreenContainer(title = { Text(stringResource(ResR.string.contractor_details_top_bar_title)) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -74,12 +74,12 @@ private fun GoodsDetailsScreen(
                 verticalArrangement = Arrangement.spacedBy(5.dp),
             ) {
                 DetailsRow(
-                    title = "Nazwa",
-                    content = goods.name,
+                    title = "Nazwa kontrahenta",
+                    content = contractor.name,
                 )
                 DetailsRow(
-                    title = goods.unitOfMeasure.name,
-                    content = goods.amount.toString(),
+                    title = "Sygnatura",
+                    content = contractor.signature,
                 )
             }
             ClickableCardsRow(
@@ -139,19 +139,10 @@ private fun RowScope.ClickableCard(
 
 @Composable
 @Preview
-private fun GoodsDetailsScreen_Preview() {
-    GoodsDetailsScreen(
-        navigateBack = {},
+private fun ContractorsScreen_Preview() {
+    ContractorsScreen(
+        contractor = fakeContractor,
+        onEditClicked = {},
+        onDeleteClicked = {},
     )
-}
-
-@Composable
-@Preview
-private fun ClickableCard_Preview() {
-    Row {
-        ClickableCard(
-            text = "LoremIpsum",
-            onClicked = {},
-        )
-    }
 }

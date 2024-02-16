@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 class AddDocumentUseCase @Inject constructor(private val repository: DocumentRepository) {
 
-    suspend operator fun invoke(document: Document) {
-        repository.save(document)
-    }
+    suspend operator fun invoke(document: Document): Long = repository.save(document)
 }

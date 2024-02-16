@@ -9,7 +9,7 @@ sealed class UnitOfMeasure(val name: String) {
     companion object {
         const val KG = "kg"
         const val CM = "cm"
-        const val PIECES = "pieces"
+        const val PIECES = "szt"
         const val UNDEFINE = "undefine"
         fun list() = mutableListOf(Kg, Cm, Pieces)
         fun parse(string: String): UnitOfMeasure =

@@ -11,17 +11,20 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GoodsDao {
-    @Query("SELECT * FROM goods WHERE goodsId LIKE :goodsId")
-    suspend fun getGoods(goodsId: Long): GoodsEntity
+    @Delete
+    suspend fun deleteGoods(goods: GoodsEntity)
 
     @Query("SELECT * FROM goods WHERE goodsId IN (:ids)")
     fun get(ids: List<Long>): Flow<List<GoodsEntity>>
 
+    @Query("SELECT * FROM goods JOIN documentCrossGoods ON goods.goodsId=documentCrossGoods.goodsId WHERE documentId = :documentId")
+    fun getByDocumentId(documentId: Long): Flow<List<GoodsEntity>>
+
+    @Query("SELECT * FROM goods WHERE goodsId LIKE :goodsId")
+    suspend fun getGoods(goodsId: Long): GoodsEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveNewGoods(goods: GoodsEntity): Long
-
-    @Delete
-    suspend fun deleteGoods(goods: GoodsEntity)
 
     @Update
     suspend fun updateGoods(goods: GoodsEntity)

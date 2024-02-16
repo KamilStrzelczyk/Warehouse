@@ -6,26 +6,35 @@ import com.example.domain.model.Contractor
 import com.example.domain.model.Document
 import com.example.domain.provider.LocalDateTimeProvider
 import com.example.domain.usecase.AddDocumentUseCase
+import com.example.domain.usecase.GenerateSignatureUseCase
 import com.example.domain.usecase.GetAllContractorUseCase
 import com.example.domain.usecase.GetAllDocumentUseCase
 import com.example.presentation.component.fakeContractor
+import com.example.presentation.screen.documents.presentation.DocumentsViewModel.Event.NavigateDocumentsDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DocumentsViewModel @Inject constructor(
+    private val addDocument: AddDocumentUseCase,
     private val getAllContractor: GetAllContractorUseCase,
     private val getAllDocument: GetAllDocumentUseCase,
+    private val generateSignature: GenerateSignatureUseCase,
     private val localDateTime: LocalDateTimeProvider,
-    private val addDocument: AddDocumentUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewModelState())
     val state: StateFlow<ViewModelState> = _state
+
+    private val _event = MutableSharedFlow<Event>()
+    val event: SharedFlow<Event> = _event
 
     init {
         updateContractor()
@@ -34,9 +43,11 @@ class DocumentsViewModel @Inject constructor(
 
     private fun updateContractor() {
         viewModelScope.launch {
+            val contractors = getAllContractor().first()
             _state.update {
                 _state.value.copy(
-                    contractors = getAllContractor(),
+                    contractors = contractors,
+                    selectedContractor = contractors.first()
                 )
             }
         }
@@ -45,9 +56,8 @@ class DocumentsViewModel @Inject constructor(
     private fun updateDocuments() {
         viewModelScope.launch {
             _state.update {
-                _state.value.copy(
+                it.copy(
                     documents = getAllDocument(),
-                    selectedContractor = _state.value.contractors.first()
                 )
             }
         }
@@ -62,15 +72,17 @@ class DocumentsViewModel @Inject constructor(
     }
 
     fun onAddDocumentClicked() {
+        val lastDocumentIndex = _state.value.documents.lastIndex
         val document = Document(
             date = localDateTime.getNow().toString(),
-            signature = "NewDocument",
+            signature = generateSignature(lastDocumentIndex),
             contractor = _state.value.selectedContractor,
-            collection = "",
+            contractorName = _state.value.selectedContractor.name,
         )
         viewModelScope.launch {
             document.run {
-                addDocument(document)
+                val documentId = addDocument(document)
+                _event.emit(NavigateDocumentsDetails(documentId))
             }
         }
         updateDocuments()
@@ -85,10 +97,14 @@ class DocumentsViewModel @Inject constructor(
         }
     }
 
+    sealed class Event {
+        data class NavigateDocumentsDetails(val documentId: Long) : Event()
+    }
+
     data class ViewModelState(
-        val selectedContractor: Contractor = fakeContractor,
         val contractors: List<Contractor> = emptyList(),
-        val documents: List<Document> = emptyList(),
         val dialogVisible: Boolean = false,
+        val documents: List<Document> = emptyList(),
+        val selectedContractor: Contractor = fakeContractor,
     )
 }

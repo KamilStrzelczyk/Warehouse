@@ -3,13 +3,16 @@ package com.example.presentation.screen.documentdetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.Document
 import com.example.domain.model.Goods
-import com.example.domain.repository.DocumentRepository
 import com.example.domain.usecase.AddGoodsToDocumentUseCase
+import com.example.domain.usecase.GetAllGoodsAsFlowUseCase
+import com.example.domain.usecase.GetDocumentUseCase
 import com.example.domain.utils.UnitOfMeasure
 import com.example.presentation.component.GoodsTextFieldType
 import com.example.presentation.component.GoodsTextFieldType.AMOUNT
 import com.example.presentation.component.GoodsTextFieldType.NAME
+import com.example.presentation.component.fakeDocument
 import com.example.presentation.navigation.Destination.DocumentDetails.Companion.DOCUMENT_DETAILS_ID_ARGUMENT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +25,8 @@ import javax.inject.Inject
 class DocumentDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val addGoodsToDocument: AddGoodsToDocumentUseCase,
-    private val documentRepository: DocumentRepository,
+    private val getAllGoodsAsFlow: GetAllGoodsAsFlowUseCase,
+    private val getDocument: GetDocumentUseCase,
 ) : ViewModel() {
 
     private val documentId: String = checkNotNull(savedStateHandle[DOCUMENT_DETAILS_ID_ARGUMENT])
@@ -32,10 +36,17 @@ class DocumentDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            documentRepository.getAllAsFlow(documentId.toLong()).collect { goods ->
+            _state.update {
+                it.copy(
+                    document = getDocument(documentId.toLong())
+                )
+            }
+        }
+        viewModelScope.launch {
+            getAllGoodsAsFlow(documentId.toLong()).collect { goods ->
                 _state.update {
-                    _state.value.copy(
-                        goods = goods
+                    it.copy(
+                        goods = goods,
                     )
                 }
             }
@@ -74,7 +85,10 @@ class DocumentDetailsViewModel @Inject constructor(
                 unitOfMeasure = unitOfMeasure,
             )
             viewModelScope.launch {
-                addGoodsToDocument(goods, documentId.toLong())
+                addGoodsToDocument(
+                    goods = goods,
+                    documentId = documentId.toLong(),
+                )
             }
             addGoodsDialogVisible(false)
         }
@@ -89,11 +103,11 @@ class DocumentDetailsViewModel @Inject constructor(
     }
 
     data class ViewModelState(
+        val addGoodsDialogVisible: Boolean = false,
+        val document: Document = fakeDocument,
         val goods: List<Goods> = emptyList(),
-        val documentId: Long = 0L,
         val selectedUnitOfMeasure: UnitOfMeasure = UnitOfMeasure.Pieces,
         val textFieldValueForName: String = "",
         val textFieldValueForAmount: String = "",
-        val addGoodsDialogVisible: Boolean = false,
     )
 }

@@ -10,6 +10,9 @@ import com.example.infrastructure.database.entities.DocumentEntity
 @Dao
 interface DocumentDao {
 
+    @Delete
+    suspend fun deleteDocument(item: DocumentEntity)
+
     @Query("SELECT * FROM document WHERE documentId = :documentId")
     suspend fun get(documentId: Long): DocumentEntity
 
@@ -17,8 +20,5 @@ interface DocumentDao {
     suspend fun getAllDocument(): List<DocumentEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveNewDocument(vararg user: DocumentEntity)
-
-    @Delete
-    suspend fun deleteDocument(item: DocumentEntity)
+    suspend fun saveNewDocument(user: DocumentEntity): Long
 }
