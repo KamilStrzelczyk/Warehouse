@@ -7,8 +7,28 @@ sealed class Destination(val route: String) {
     data class DocumentDetails(val documentId: Long) : Destination(buildNavDestination(documentId)) {
         companion object {
             const val ROUTE = DOCUMENTS_DETAILS_ROUTE
-            const val DOCUMENT_ID_ARGUMENT = "documentId"
+            const val DOCUMENT_DETAILS_ID_ARGUMENT = "documentId"
             fun buildNavDestination(documentId: Long) = "DocumentsRoute/$documentId"
+        }
+    }
+
+    data class GoodsDetails(
+        val goodsId: Long,
+        val documentId: Long,
+    ) : Destination(
+        buildNavDestination(
+            goodsId = goodsId,
+            documentId = documentId
+        ),
+    ) {
+        companion object {
+            const val ROUTE = GOODS_DETAILS_ROUTE
+            const val GOODS_ID_ARGUMENT = "goodsId"
+            const val GOODS_DOCUMENT_ID_ARGUMENT = "documentId"
+            fun buildNavDestination(
+                goodsId: Long,
+                documentId: Long,
+            ) = "GoodsRoute/$goodsId/$documentId"
         }
     }
 
@@ -17,5 +37,6 @@ sealed class Destination(val route: String) {
         const val CONTRACTORS_ROUTE = "ContractorsRoute"
         const val DOCUMENTS_ROUTE = "DocumentsRoute"
         const val DOCUMENTS_DETAILS_ROUTE = "DocumentsRoute/{documentId}"
+        const val GOODS_DETAILS_ROUTE = "GoodsRoute/{goodsId}/{documentId}"
     }
 }

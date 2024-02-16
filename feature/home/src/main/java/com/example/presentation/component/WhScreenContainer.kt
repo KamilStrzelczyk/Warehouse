@@ -19,30 +19,48 @@ import androidx.compose.ui.Modifier
 @Composable
 internal fun WhScreenContainer(
     title: String,
-    onClicked: () -> Unit,
+    onClicked: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = { Text(title) }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { onClicked() }) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
+    if (onClicked == null) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    title = { Text(title) }
                 )
+            },
+        ) { padding ->
+            Column(modifier = Modifier.padding(padding)) {
+                content()
             }
         }
-    ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            content()
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    title = { Text(title) }
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(onClick = { onClicked() }) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
+                }
+            }
+        ) { padding ->
+            Column(modifier = Modifier.padding(padding)) {
+                content()
+            }
         }
     }
 }

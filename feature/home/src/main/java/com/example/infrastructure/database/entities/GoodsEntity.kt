@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "goods")
 data class GoodsEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val goodsId: Long,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "amount")
-    val amount: String,
+    val amount: Long,
     @ColumnInfo(name = "unitOfMeasure")
     val unitOfMeasure: String,
 )

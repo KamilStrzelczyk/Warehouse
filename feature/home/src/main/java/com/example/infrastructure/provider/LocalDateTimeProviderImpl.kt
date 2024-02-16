@@ -6,6 +6,5 @@ import javax.inject.Inject
 
 internal class LocalDateTimeProviderImpl @Inject constructor() : LocalDateTimeProvider {
 
-
     override fun getNow(): LocalDate = LocalDate.now()
 }

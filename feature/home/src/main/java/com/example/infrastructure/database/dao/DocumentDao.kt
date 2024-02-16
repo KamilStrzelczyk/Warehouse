@@ -10,7 +10,7 @@ import com.example.infrastructure.database.entities.DocumentEntity
 @Dao
 interface DocumentDao {
 
-    @Query("SELECT * FROM document WHERE id LIKE :documentId")
+    @Query("SELECT * FROM document WHERE documentId = :documentId")
     suspend fun get(documentId: Long): DocumentEntity
 
     @Query("SELECT * FROM document")

@@ -2,6 +2,7 @@ package com.example.infrastructure.mapper
 
 import com.example.domain.model.Contractor
 import com.example.domain.model.Document
+import com.example.infrastructure.database.entities.DocumentCrossGoodsEntity
 import com.example.infrastructure.database.entities.DocumentEntity
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class DocumentMapper @Inject constructor() {
         documents.map { document ->
             document.run {
                 Document(
-                    id = id,
+                    id = documentId,
                     date = date,
                     signature = signature,
                     contractor = setContractor(
@@ -32,7 +33,7 @@ class DocumentMapper @Inject constructor() {
     ): Document =
         document.run {
             Document(
-                id = id,
+                id = documentId,
                 date = date,
                 signature = signature,
                 contractor = setContractor(
@@ -50,11 +51,17 @@ class DocumentMapper @Inject constructor() {
 
     fun toEntityModel(document: Document) = document.run {
         DocumentEntity(
-            id = id,
+            documentId = id,
             date = date,
             signature = signature,
             contractorId = contractor.id,
             collection = collection,
         )
     }
+
+    fun documentWithGoodsToEntityModel(documentId: Long, goodsId: Long) =
+        DocumentCrossGoodsEntity(
+            documentId = documentId,
+            goodsId = goodsId,
+        )
 }

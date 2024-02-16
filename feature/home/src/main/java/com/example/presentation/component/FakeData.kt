@@ -20,7 +20,7 @@ val fakeDocument = Document(
 )
 
 val fakeGoods = Goods(
-    amount = "20",
+    amount = 20L,
     name = "LoremIpsum",
     unitOfMeasure = UnitOfMeasure.Kg,
 )

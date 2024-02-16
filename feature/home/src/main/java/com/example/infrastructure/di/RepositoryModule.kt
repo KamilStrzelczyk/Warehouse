@@ -2,8 +2,10 @@ package com.example.infrastructure.di
 
 import com.example.domain.repository.ContractorRepository
 import com.example.domain.repository.DocumentRepository
+import com.example.domain.repository.GoodsRepository
 import com.example.infrastructure.repository.ContractorRepositoryImpl
 import com.example.infrastructure.repository.DocumentRepositoryImpl
+import com.example.infrastructure.repository.GoodsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,7 @@ interface RepositoryModule {
 
     @Binds
     fun bindsWorkDocumentRepository(impl: DocumentRepositoryImpl): DocumentRepository
+
+    @Binds
+    fun bindsGoodsRepository(impl: GoodsRepositoryImpl): GoodsRepository
 }

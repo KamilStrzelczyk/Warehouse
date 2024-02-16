@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.example.infrastructure.database.AppDatabase
 import com.example.infrastructure.database.dao.ContractorDao
+import com.example.infrastructure.database.dao.DocumentCrossGoodsDao
 import com.example.infrastructure.database.dao.DocumentDao
+import com.example.infrastructure.database.dao.GoodsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +19,20 @@ import javax.inject.Singleton
 class DatabaseModule {
 
     @Provides
-    fun provideUserDao(appDatabase: AppDatabase): ContractorDao =
+    fun provideContractorDao(appDatabase: AppDatabase): ContractorDao =
         appDatabase.getContractorDao()
 
     @Provides
-    fun provideAdminDao(appDatabase: AppDatabase): DocumentDao =
+    fun provideDocumentDao(appDatabase: AppDatabase): DocumentDao =
         appDatabase.getDocumentDao()
+
+    @Provides
+    fun provideGoodsDao(appDatabase: AppDatabase): GoodsDao =
+        appDatabase.getGoodsDao()
+
+    @Provides
+    fun provideDocumentCrossGoodsDao(appDatabase: AppDatabase): DocumentCrossGoodsDao =
+        appDatabase.getDocumentCrossGoodsDao()
 
     @Singleton
     @Provides
