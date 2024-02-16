@@ -1,21 +1,14 @@
 package com.example.presentation.screen.contractors.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,23 +19,35 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.model.Contractor
 import com.example.presentation.component.WhCard
-import com.example.presentation.component.WhDialog
 import com.example.presentation.component.WhScreenContainer
-import com.example.presentation.component.WhSpacer
 import com.example.presentation.component.fakeContractor
+import com.example.presentation.screen.contractors.component.ContractorDialog
+import com.example.presentation.screen.contractors.presentation.ContractorsViewModel.Event.NavigateToContractorDetails
 import com.example.resources.R as ResR
 
 @Composable
-fun ContractorsScreen() {
+fun ContractorsScreen(
+    navigateToContractorDetails: (Long) -> Unit,
+) {
     val viewModel: ContractorsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is NavigateToContractorDetails -> navigateToContractorDetails(event.contractorId)
+            }
+        }
+    }
 
     ContractorsScreen(
         contractors = state.contractors,
         onAddClicked = viewModel::addContractorDialogVisible,
+        onContractorClicked = navigateToContractorDetails,
     )
-    AddContractorDialog(
-        dialogVisible = state.dialogVisible,
+    ContractorDialog(
+        confirmButtonText = stringResource(ResR.string.contractors_add_contractor_dialog_cta_button_add),
+        visible = state.dialogVisible,
         textFieldValue = state.textFieldValue,
         onTextValueChange = { text -> viewModel.onTextValueChange(text) },
         onDismissDialog = viewModel::addContractorDialogVisible,
@@ -54,16 +59,17 @@ fun ContractorsScreen() {
 private fun ContractorsScreen(
     contractors: List<Contractor>,
     onAddClicked: (Boolean) -> Unit,
+    onContractorClicked: (Long) -> Unit,
 ) {
     WhScreenContainer(
-        title = stringResource(ResR.string.contractors_top_bar_title),
+        title = { Text(stringResource(ResR.string.contractors_top_bar_title)) },
         onClicked = { onAddClicked(true) },
     ) {
         LazyColumn {
             items(contractors) { contractor ->
                 Item(
                     contractor = contractor,
-                    onMoreClicked = {},
+                    onClicked = onContractorClicked,
                 )
             }
         }
@@ -73,9 +79,9 @@ private fun ContractorsScreen(
 @Composable
 fun Item(
     contractor: Contractor,
-    onMoreClicked: () -> Unit,
+    onClicked: (Long) -> Unit,
 ) {
-    WhCard(onClick = {}) {
+    WhCard(onClick = { onClicked(contractor.id) }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -84,68 +90,7 @@ fun Item(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(contractor.name)
-            Icon(
-                Icons.Default.MoreVert,
-                contentDescription = null,
-                modifier = Modifier.clickable { onMoreClicked() },
-            )
         }
-    }
-}
-
-@Composable
-private fun AddContractorDialog(
-    dialogVisible: Boolean,
-    textFieldValue: String,
-    onTextValueChange: (String) -> Unit,
-    onDismissDialog: (Boolean) -> Unit,
-    onConfirmDialog: () -> Unit,
-) {
-    WhDialog(
-        visible = dialogVisible,
-        onDismissRequest = {},
-    ) {
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = stringResource(ResR.string.contractors_add_contractor_dialog_contractor_name))
-            TextField(
-                value = textFieldValue,
-                onValueChange = { text -> onTextValueChange(text) },
-                singleLine = true,
-            )
-            WhSpacer(5.dp)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-            ) {
-                DialogButton(
-                    text = stringResource(ResR.string.contractors_add_contractor_dialog_cta_button_add),
-                    onClicked = onConfirmDialog,
-                    weight = 1f,
-                )
-                WhSpacer(5.dp)
-                DialogButton(
-                    text = stringResource(ResR.string.contractors_add_contractor_dialog_cta_button_cancel),
-                    onClicked = { onDismissDialog(false) },
-                    weight = 1f,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun RowScope.DialogButton(
-    text: String,
-    weight: Float,
-    onClicked: () -> Unit,
-) {
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .weight(weight),
-        onClick = onClicked,
-    ) {
-        Text(text = text)
     }
 }
 
@@ -155,6 +100,7 @@ private fun ContractorsScreen_Preview() {
     ContractorsScreen(
         contractors = mutableListOf(fakeContractor),
         onAddClicked = {},
+        onContractorClicked = {},
     )
 }
 
@@ -163,15 +109,16 @@ private fun ContractorsScreen_Preview() {
 private fun Item_Preview() {
     Item(
         contractor = fakeContractor,
-        onMoreClicked = {},
+        onClicked = {},
     )
 }
 
 @Composable
 @Preview
 private fun Dialog_Preview() {
-    AddContractorDialog(
-        dialogVisible = true,
+    ContractorDialog(
+        confirmButtonText = stringResource(ResR.string.contractors_add_contractor_dialog_cta_button_add),
+        visible = true,
         textFieldValue = "LoremIpsum",
         onTextValueChange = {},
         onConfirmDialog = {},

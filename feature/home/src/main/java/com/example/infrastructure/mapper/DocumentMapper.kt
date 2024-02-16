@@ -2,7 +2,6 @@ package com.example.infrastructure.mapper
 
 import com.example.domain.model.Contractor
 import com.example.domain.model.Document
-import com.example.infrastructure.database.entities.DocumentCrossGoodsEntity
 import com.example.infrastructure.database.entities.DocumentEntity
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class DocumentMapper @Inject constructor() {
                         contractorId = contractorId,
                         contractors = contractors,
                     ),
-                    collection = collection,
+                    contractorName = contractorName,
                 )
             }
         }
@@ -40,28 +39,22 @@ class DocumentMapper @Inject constructor() {
                     contractorId = contractorId,
                     contractors = contractors,
                 ),
-                collection = collection,
+                contractorName = contractorName,
             )
         }
-
-    private fun setContractor(
-        contractorId: Long,
-        contractors: List<Contractor>,
-    ) = contractors.first { it.id == contractorId }
 
     fun toEntityModel(document: Document) = document.run {
         DocumentEntity(
             documentId = id,
             date = date,
             signature = signature,
-            contractorId = contractor.id,
-            collection = collection,
+            contractorId = contractor!!.id,
+            contractorName = contractorName,
         )
     }
 
-    fun documentWithGoodsToEntityModel(documentId: Long, goodsId: Long) =
-        DocumentCrossGoodsEntity(
-            documentId = documentId,
-            goodsId = goodsId,
-        )
+    private fun setContractor(
+        contractorId: Long,
+        contractors: List<Contractor>,
+    ) = contractors.firstOrNull { (it.id == contractorId) }
 }

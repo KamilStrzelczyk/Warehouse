@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.model.Document
@@ -34,8 +35,9 @@ internal fun DocumentDetailsScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     DocumentDetailsScreen(
+        document = state.document,
         goods = state.goods,
-        onClicked = { goodsId -> navigateToGoodsDetails(goodsId, state.documentId) },
+        onClicked = { goodsId -> navigateToGoodsDetails(goodsId, state.document.id) },
         onAddGoodsClicked = viewModel::addGoodsDialogVisible,
     )
     AddGoodsDialog(
@@ -52,12 +54,13 @@ internal fun DocumentDetailsScreen(
 
 @Composable
 internal fun DocumentDetailsScreen(
+    document: Document,
     goods: List<Goods>,
     onClicked: (goodsId: Long) -> Unit,
     onAddGoodsClicked: (Boolean) -> Unit,
 ) {
     WhScreenContainer(
-        title = header(fakeDocument),
+        title = { Header(document) },
         onClicked = { onAddGoodsClicked(true) },
     ) {
         LazyColumn {
@@ -104,15 +107,34 @@ private fun Item(
 }
 
 @Composable
-private fun header(document: Document): String =
+private fun Header(document: Document) {
     document.run {
-        "$date $signature ${contractor.name}"
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 15.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            HeaderText(date)
+            HeaderText(signature)
+            HeaderText(contractorName)
+        }
     }
+}
+
+@Composable
+private fun HeaderText(title: String) {
+    Text(
+        text = title,
+        fontSize = 13.sp,
+    )
+}
 
 @Composable
 @Preview
 private fun DocumentDetailsScreen_Preview() {
     DocumentDetailsScreen(
+        document = fakeDocument,
         goods = mutableListOf(fakeGoods),
         onClicked = {},
         onAddGoodsClicked = {},

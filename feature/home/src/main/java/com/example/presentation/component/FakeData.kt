@@ -16,7 +16,7 @@ val fakeDocument = Document(
     date = "12/12/2034",
     signature = "LoremIpsum",
     contractor = fakeContractor,
-    collection = "",
+    contractorName = "SuperMarket",
 )
 
 val fakeGoods = Goods(

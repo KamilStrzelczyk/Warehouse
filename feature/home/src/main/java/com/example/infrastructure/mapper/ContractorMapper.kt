@@ -17,6 +17,15 @@ class ContractorMapper @Inject constructor() {
             }
         }
 
+    fun toDomainModel(contractor: ContractorEntity): Contractor =
+        contractor.run {
+            Contractor(
+                id = id,
+                name = name,
+                signature = signature,
+            )
+        }
+
     fun toEntityModel(contractor: Contractor) = contractor.run {
         ContractorEntity(
             id = id,

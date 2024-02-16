@@ -26,8 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GoodsDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getGoods: GetGoodsUseCase,
     private val deleteGoods: DeleteGoodsUseCase,
+    private val getGoods: GetGoodsUseCase,
     private val update: UpdateGoodsUseCase,
 ) : ViewModel() {
 
@@ -56,7 +56,7 @@ class GoodsDetailsViewModel @Inject constructor(
     fun onTextValueChange(
         string: String,
         goodsTextField: GoodsTextFieldType,
-        ) {
+    ) {
         _state.update {
             when (goodsTextField) {
                 NAME -> _state.value.copy(textFieldValueForName = string)
@@ -95,8 +95,8 @@ class GoodsDetailsViewModel @Inject constructor(
             )
             viewModelScope.launch {
                 update(goods)
+                updateGoods()
             }
-            updateGoods()
             editGoodsDialogVisible(false)
         }
     }

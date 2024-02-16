@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 class AddContractorUseCase @Inject constructor(private val repository: ContractorRepository) {
 
-    suspend operator fun invoke(contractor: Contractor) {
-        repository.save(contractor)
-    }
+    suspend operator fun invoke(contractor: Contractor): Long = repository.save(contractor)
 }

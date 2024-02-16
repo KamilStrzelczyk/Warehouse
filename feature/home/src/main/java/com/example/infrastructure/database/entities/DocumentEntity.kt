@@ -14,6 +14,6 @@ data class DocumentEntity(
     val signature: String,
     @ColumnInfo(name = "contractor")
     val contractorId: Long,
-    @ColumnInfo(name = "collection")
-    val collection: String,
+    @ColumnInfo(name = "contractorName")
+    val contractorName: String,
 )

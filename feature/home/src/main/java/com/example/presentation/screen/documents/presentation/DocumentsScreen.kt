@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,7 @@ import com.example.presentation.component.WhScreenContainer
 import com.example.presentation.component.WhSelector
 import com.example.presentation.component.WhSpacer
 import com.example.presentation.component.fakeDocument
+import com.example.presentation.screen.documents.presentation.DocumentsViewModel.Event.NavigateDocumentsDetails
 import com.example.resources.R as ResR
 
 @Composable
@@ -39,6 +41,15 @@ fun DocumentsScreen(
 ) {
     val viewModel: DocumentsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is NavigateDocumentsDetails -> navigateToDocumentDetails(event.documentId)
+            }
+        }
+    }
+
     DocumentsScreen(
         documents = state.documents,
         onDocumentClicked = navigateToDocumentDetails,
@@ -61,7 +72,7 @@ private fun DocumentsScreen(
     onAddDocumentClicked: (Boolean) -> Unit,
 ) {
     WhScreenContainer(
-        title = stringResource(ResR.string.documents_top_bar_title),
+        title = { Text(stringResource(ResR.string.documents_top_bar_title)) },
         onClicked = { onAddDocumentClicked(true) },
     ) {
         LazyColumn {
@@ -91,7 +102,7 @@ private fun Item(
             document.run {
                 Text(date)
                 Text(signature)
-                Text(contractor.name)
+                Text(contractorName)
             }
         }
     }

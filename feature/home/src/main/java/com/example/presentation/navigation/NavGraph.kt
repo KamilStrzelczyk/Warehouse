@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.presentation.navigation.Destination.ContractorDetails
 import com.example.presentation.navigation.Destination.Contractors
 import com.example.presentation.navigation.Destination.DocumentDetails
 import com.example.presentation.navigation.Destination.Documents
 import com.example.presentation.navigation.Destination.GoodsDetails
+import com.example.presentation.screen.contractorDetails.presentation.ContractorDetailsScreen
 import com.example.presentation.screen.contractors.presentation.ContractorsScreen
 import com.example.presentation.screen.documentdetails.DocumentDetailsScreen
 import com.example.presentation.screen.documents.presentation.DocumentsScreen
@@ -36,7 +38,18 @@ fun NavGraphMain() {
                 }
             )
         }
-        composable(Contractors.route) { ContractorsScreen() }
+        composable(Contractors.route) {
+            ContractorsScreen(
+                navigateToContractorDetails = {
+                    navController.navigate(ContractorDetails(it).route)
+                }
+            )
+        }
+        composable(ContractorDetails.ROUTE) {
+            ContractorDetailsScreen {
+                navController.popBackStack()
+            }
+        }
         composable(Documents.route) {
             DocumentsScreen(
                 navigateToDocumentDetails = {

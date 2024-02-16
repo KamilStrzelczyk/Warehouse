@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Warehouse</string>
     <string name="contractors_top_bar_title">Kontrahenci</string>
+    <string name="contractor_details_top_bar_title">Kontrahent</string>
     <string name="contractors_add_contractor_dialog_contractor_name">Nazwa kontrahenta</string>
     <string name="contractors_add_contractor_dialog_cta_button_add">Dodaj</string>
     <string name="contractors_add_contractor_dialog_cta_button_cancel">Anuluj</string>
